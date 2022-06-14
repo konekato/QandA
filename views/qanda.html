@@ -1,0 +1,887 @@
+{{define "qanda"}}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="https://konekato.github.io/assets/img/favicon.ico">
+    <link rel="stylesheet" href="https://konekato.github.io/assets/css/default.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Russo+One&family=Source+Code+Pro:ital,wght@1,900&display=swap"
+        rel="stylesheet">
+    <title>Q&A | konekato</title>
+    <link href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" rel="stylesheet">
+    <style>
+        html {
+            font-size: 16px;
+        }
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        select {
+            -webkit-appearance: button;
+            appearance: button;
+        }
+        /* Height settings */
+        @media screen and (max-height: 959px) {
+            .container-qanda {
+                margin: 15px auto;
+            }
+        }
+        @media screen and (min-height: 960px) {
+            .container-qanda {
+                margin: calc(calc(100vh - 930px) / 2) auto;
+            }
+        }
+
+        /* Width settings (more than tablet's width) */
+        @media screen and (min-width:1024px) {
+            .container-qanda {
+                max-width: 1024px;
+            }
+            .container-qanda .right {
+                width: 690px;
+            }
+        }
+        @media screen and (min-width:768px) and (max-width: 1023px) {
+            .container-qanda {
+                max-width: 768px;
+            }
+            .container-qanda .right {
+                width: 430px;
+            }
+        }
+        @media (min-width:768px) {
+            body {
+                font-size: 1rem;
+            }
+
+            .container-header {
+                max-width: 1050px;
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .container-qanda {
+                border: 1px solid hsl(250, 45%, 45%);
+                height: 722px;
+            }
+
+            .container-qanda .left {
+                border-right: 1px solid #503fa7;
+                height: 100%;
+                width: 331px;
+                float: left;
+            }
+
+            .container-qanda .left .top {
+                border-bottom: 1px solid #503fa7;
+                height: 65px;
+                width: 100%;
+            }
+
+            .container-qanda .left .top .title {
+                font-family: 'Russo One', sans-serif;
+                font-size: 50px;
+                color: #503fa7;
+                margin: auto 15px;
+                height: 100%;
+                float: left;
+            }
+
+            .container-qanda .left .top .post {
+                height: 100%;
+                width: auto;
+                text-align: right;
+                padding: 20px 10px;
+            }
+
+            .container-qanda .left .top .post i {
+                font-size: 25px;
+                color: #7c63ff;
+                cursor: pointer;
+            }
+
+            .container-qanda .left .top .post i:hover {
+                color: #503fa7;
+            }
+
+            .container-qanda .left .order {
+                color: #503fa7;
+                border-bottom: 1px solid #503fa7;
+                height: 52px;
+                width: 100%;
+            }
+
+            .container-qanda .left .order .switch {
+                border-right: 1px solid #503fa7;
+                height: 100%;
+                width: 139px;
+                float: left;
+                text-align: center;
+            }
+
+            .container-qanda .left .order .switch .on {
+                background-color: #f1efff;
+                color: #7c63ff;
+                height: 100%;
+                width: 100%;
+                padding: 14px 0;
+            }
+
+            .container-qanda .left .order .switch .on:hover {
+                color: #503fa7;
+            }
+
+            .container-qanda .left .order .switch .off {
+                color: #7c63ff;
+                height: 100%;
+                width: 100%;
+                padding: 14px 0;
+            }
+
+            .container-qanda .left .order .switch .off:hover {
+                background-color: #f1efff;
+                color: #503fa7;
+            }
+
+            .container-qanda .left .order .type {
+                border: solid #503fa7;
+                border-width: 0 1px 0 0;
+                background-color: white;
+                color: #7c63ff;
+                height: 100%;
+                width: 139px;
+                float: left;
+                cursor: pointer;
+            }
+
+            .container-qanda .left .order .type:hover {
+                color: #503fa7;
+            }
+
+            .container-qanda .left .order .sort {
+                height: 100%;
+                width: 52px;
+                float: left;
+                text-align: center;
+            }
+
+            .container-qanda .left .order .sort i {
+                font-size: 25px;
+                color: #7c63ff;
+                padding: 13px 0;
+            }
+
+            .container-qanda .left .order .sort i:hover {
+                color: #503fa7;
+            }
+
+            .container-qanda .left .page {
+                color: #503fa7;
+                border-bottom: 1px solid #503fa7;
+                height: 52px;
+                width: 100%;
+                text-align: center;
+                padding: 14px 0;
+            }
+
+            .container-qanda .left .page i {
+                color: #7c63ff;
+            }
+
+            .container-qanda .left .page i:hover {
+                color: #503fa7;
+            }
+
+            .container-qanda .left .contents {
+                height: auto;
+                width: 100%;
+            }
+
+            .container-qanda .left .contents .c {
+                border-bottom: 1px solid #503fa7;
+                height: 92px;
+                width: 100%;
+                padding: 5px 20px;
+                overflow: hidden;
+            }
+        
+            /* .container-qanda .left .contents .c:hover {
+                background-color: #f1efff;
+            } */
+
+            .container-qanda .left .contents .isactive {
+                background-color: #f1efff;
+            }
+
+            .container-qanda .left .contents .c .t {
+                color: black;
+                height: 48px;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .container-qanda .left .contents .c .t:hover {
+                text-decoration: underline;
+            }
+
+            .container-qanda .left .contents .c .n {
+                text-align: right;
+            }
+
+            .container-qanda .left .contents .c .n i {
+                font-size: 23px;
+            }
+
+            .container-qanda .left .contents .c .n .isactive {
+                color: white !important;
+                background-color: #503fa7 !important;
+            }
+
+            .container-qanda .left .contents .c .n .isactive i {
+                color: white !important;
+            }
+
+            .container-qanda .left .contents .c .n .b {
+                color: #503fa7;
+                font-size: 18px;
+                border-radius: 30px;
+                border: 1.5px solid #503fa7;
+                background-color: white;
+                height: 31px;
+                width: 76px;
+                text-align: right;
+            }
+
+            .container-qanda .left .contents .c .n .b:hover {
+                color: white;
+                background-color: #503fa7;
+            }
+
+            .container-qanda .left .contents .c .n .b:hover i {
+                color: white;
+            }
+
+            .container-qanda .left .contents .c .n .b div {
+                width: 30px;
+                float: left;
+                padding: 0px;
+                text-align: right;
+            }
+
+            .container-qanda .left .contents .c .n .b i {
+                color: #503fa7;
+                font-size: 23px;
+            }
+
+            .container-qanda .right {
+                height: 100%;
+                /* width: 690px; */
+                float: left;
+                padding: 26px;
+                overflow: scroll;
+            }
+
+            .container-qanda .right div .created {
+                font-size: 13px;
+                color: rgb(141, 134, 122) !important;
+                text-align: right;
+                margin: 5px 0;
+            }
+
+            .container-qanda .right div .content {
+                white-space: pre-line;
+                word-break: break-all;
+                overflow-wrap: break-word;
+            }
+
+            .container-qanda .right div .q {
+                width: 100%;
+                font-size: 40px;
+            }
+
+            .container-qanda .right div .a {
+                width: 100%;
+                font-size: 20px;
+            }
+
+            .container-msg {
+                max-width: 1024px;
+                margin: 0 auto 15px auto;
+            }
+
+            .container-cookie {
+                position: fixed;
+                bottom: 0;
+                height: 80px;
+                width: 100%;
+                background-color: #7c63ff;
+                opacity: 0.9;
+                padding: 5px;
+                color: white;
+            }
+
+            .container-cookie .content {
+                text-align: center;
+                margin: 10px 0;
+            }
+
+            .container-cookie .content span a {
+                color: white;
+                margin-right: 20px;
+                text-decoration: underline;
+            }
+        }
+        /* Width settings (less than tablet's width) */
+        @media screen and (max-width:767px) {
+            body {
+                font-size: 1rem;
+            }
+
+            .container-header {
+                width: 100%;
+                padding-right: 15px;
+                padding-left: 15px;
+                margin-right: auto;
+                margin-left: auto;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .container-qanda {
+                max-width: 100vw;
+                border: 1px solid hsl(250, 45%, 45%);
+            }
+
+            .container-qanda .left {
+                border-right: 1px solid #503fa7;
+                height: 722px;
+                width: 100%;
+            }
+
+            .container-qanda .left .top {
+                border-bottom: 1px solid #503fa7;
+                height: 65px;
+                width: 100%;
+            }
+
+            .container-qanda .left .top .title {
+                font-family: 'Russo One', sans-serif;
+                font-size: 50px;
+                color: #503fa7;
+                margin: auto 15px;
+                height: 100%;
+                float: left;
+            }
+
+            .container-qanda .left .top .post {
+                height: 100%;
+                width: auto;
+                text-align: right;
+                padding: 20px 10px;
+            }
+
+            .container-qanda .left .top .post i {
+                font-size: 25px;
+                color: #7c63ff;
+                cursor: pointer;
+            }
+
+            .container-qanda .left .order {
+                color: #503fa7;
+                border-bottom: 1px solid #503fa7;
+                height: 52px;
+                width: 100%;
+            }
+
+            .container-qanda .left .order .switch {
+                border-right: 1px solid #503fa7;
+                height: 100%;
+                width: calc(calc(100% - 52px) / 2);
+                float: left;
+                text-align: center;
+            }
+
+            .container-qanda .left .order .switch .on {
+                background-color: #f1efff;
+                color: #7c63ff;
+                height: 100%;
+                width: 100%;
+                padding: 14px 0;
+            }
+
+            .container-qanda .left .order .switch .off {
+                color: #7c63ff;
+                height: 100%;
+                width: 100%;
+                padding: 14px 0;
+            }
+
+            .container-qanda .left .order .type {
+                border: solid #503fa7;
+                border-width: 0 1px 0 0;
+                background-color: white;
+                color: #7c63ff;
+                height: 100%;
+                width: calc(calc(100% - 52px) / 2);
+                float: left;
+                cursor: pointer;
+            }
+
+            .container-qanda .left .order .sort {
+                height: 100%;
+                width: 52px;
+                float: left;
+                text-align: center;
+            }
+
+            .container-qanda .left .order .sort i {
+                font-size: 25px;
+                color: #7c63ff;
+                padding: 13px 0;
+            }
+
+            .container-qanda .left .page {
+                color: #503fa7;
+                border-bottom: 1px solid #503fa7;
+                height: 52px;
+                width: 100%;
+                text-align: center;
+                padding: 14px 0;
+            }
+
+            .container-qanda .left .page i {
+                color: #7c63ff;
+            }
+
+            .container-qanda .left .contents {
+                height: auto;
+                width: 100%;
+            }
+
+            .container-qanda .left .contents .c {
+                border-bottom: 1px solid #503fa7;
+                height: 92px;
+                width: 100%;
+                padding: 5px 20px;
+                overflow: hidden;
+            }
+
+            .container-qanda .left .contents .isactive {
+                background-color: #f1efff;
+            }
+
+            .container-qanda .left .contents .c .t {
+                color: black;
+                height: 48px;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .container-qanda .left .contents .c .n {
+                text-align: right;
+            }
+
+            .container-qanda .left .contents .c .n i {
+                font-size: 23px;
+            }
+
+            .container-qanda .left .contents .c .n .isactive {
+                color: white !important;
+                background-color: #503fa7 !important;
+            }
+
+            .container-qanda .left .contents .c .n .isactive i {
+                color: white !important;
+            }
+
+            .container-qanda .left .contents .c .n .b {
+                color: #503fa7;
+                font-size: 18px;
+                border-radius: 30px;
+                border: 1.5px solid #503fa7;
+                background-color: white;
+                height: 31px;
+                width: 76px;
+                text-align: right;
+            }
+
+            .container-qanda .left .contents .c .n .b div {
+                width: 30px;
+                float: left;
+                padding: 0px;
+                text-align: right;
+            }
+
+            .container-qanda .left .contents .c .n .b i {
+                color: #503fa7;
+                font-size: 23px;
+            }
+
+            .container-qanda .right {
+                {{ if le .target.Question.ID 0 }}
+                display: none;
+                {{ end }}
+                border: 1px solid  #503fa7;
+                height: 722px;
+                width: 100%;
+                padding: 5px;
+                overflow: scroll;
+            }
+
+            .container-qanda .right div .created {
+                font-size: 13px;
+                color: rgb(141, 134, 122) !important;
+                text-align: right;
+                margin: 5px 0;
+            }
+
+            .container-qanda .right div .content {
+                white-space: pre-line;
+                word-break: break-all;
+                overflow-wrap: break-word;
+            }
+
+            .container-qanda .right div .q {
+                width: 100%;
+                font-size: 20px;
+            }
+
+            .container-qanda .right div .a {
+                width: 100%;
+                font-size: 16px;
+            }
+
+            .container-msg {
+                max-width: 1024px;
+                margin: 0 auto 15px auto;
+            }
+
+            .container-cookie {
+                position: fixed;
+                bottom: 0;
+                height: 120px;
+                width: 100%;
+                background-color: #7c63ff;
+                opacity: 0.9;
+                padding: 5px;
+                color: white;
+            }
+
+            .container-cookie .content {
+                text-align: center;
+                margin: 10px 0;
+            }
+
+            .container-cookie .content span a {
+                color: white;
+                margin-right: 20px;
+                text-decoration: underline;
+            }
+        }
+
+        a.disabled {
+            pointer-events: none;
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #503fa7;">
+        <div class="container-header">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://konekato.github.io/home/">Home</a>
+                </li>
+            </ul>
+            <div class="navbar-nav">
+                <a class="navbar-brand branding" href="https://konekato.github.io/">
+                    <img src="https://konekato.github.io/assets/img/brands/logo_black.png" alt="kONE" width="50px" height="15px">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="container-qanda">
+        <div class="left">
+            <div class="top">
+                <div class="title">QandA</div>
+                <div class="post">
+                    <!-- To #questionModal modal -->
+                    <a data-toggle="modal" data-target="#questionModal"><i class="fas fa-pen-square fa-fw" rel="tooltip-t" title="質問投稿"></i></a>
+                </div>
+            </div>
+            <div class="order">
+                <div class="switch">
+                    {{ if eq .onlyAnswered "true" }}
+                    <a href="/githubio/qanda?page=1&order_by={{.orderBy}}&sort_by={{.sortBy}}&only_answered=false">
+                        <div class="on">
+                            回答済のみ
+                        </div>
+                    </a>
+                    {{ else }}
+                    <a href="/githubio/qanda?page=1&order_by={{.orderBy}}&sort_by={{.sortBy}}&only_answered=true">
+                        <div class="off">
+                            未回答含む
+                        </div>
+                    </a>
+                    {{ end }}
+                </div>
+                <select id="order" class="type">
+                    <option value="created"{{if ne .orderBy "count"}} selected{{end}}>新着順</option>        
+                    <option value="count"{{if eq .orderBy "count"}} selected{{end}}>いいね順</option>
+                </select>
+                <div class="sort">
+                    {{ if eq .sortBy "asc" }}
+                    <a href="/githubio/qanda?page=1&order_by={{.orderBy}}&sort_by=desc&only_answered={{.onlyAnswered}}"><i class="fas fa-sort-numeric-up-alt fa-fw" rel="tooltip-t" title="昇順"></i></a>
+                    {{else}}
+                    <a href="/githubio/qanda?page=1&order_by={{.orderBy}}&sort_by=asc&only_answered={{.onlyAnswered}}"><i class="fas fa-sort-numeric-down-alt fa-fw" rel="tooltip-t" title="降順"></i></a>
+                    {{end}}
+                </div>
+            </div>
+            <div class="page">
+                <a href="/githubio/qanda?page={{.prevPage}}&order_by={{.orderBy}}&sort_by={{.sortBy}}&only_answered={{.onlyAnswered}}"{{if eq .prevPage .page }} class="disabled" tabindex="-1"{{end}}>
+                    <i class="fas fa-chevron-left fa-fw"></i>
+                </a>
+                Page {{.page}}
+                <a href="/githubio/qanda?page={{.nextPage}}&order_by={{.orderBy}}&sort_by={{.sortBy}}&only_answered={{.onlyAnswered}}"{{if eq .nextPage .page }} class="disabled" tabindex="-1"{{end}}>
+                    <i class="fas fa-chevron-right fa-fw"></i>
+                </a>
+            </div>
+            <div class="contents">
+                {{$uri := printf "/githubio/qanda?page=%d&order_by=%s&sort_by=%s&only_answered=%s" .page .orderBy .sortBy .onlyAnswered}}
+                {{$targetID := .target.Question.ID}}
+                {{$cookieID := .cookieID}}
+                {{range .QAndAs}}
+                <div class="c{{if eq .Question.ID $targetID}} isactive{{end}}">
+                    <a href="{{printf "%s&target=%d#target" $uri .Question.ID}}">
+                        <div class="t">{{.Question.Content}}</div>
+                    </a>
+                    <div class="n">
+                        {{if eq .Question.ID .Answer.QuestionID}}
+                        <i class="fas fa-exclamation-circle fa-fw text-success" rel="tooltip-l" title="回答済"></i>
+                        {{else}}
+                        <i class="fas fa-question-circle fa-fw text-danger" rel="tooltip-l" title="未回答"></i>
+                        {{end}}
+                        <button type="button" class="b{{if ne .QuestionGood.CID ""}} isactive{{end}}" onclick="
+                        {{if eq $cookieID ""}}
+                        return showModalAcceptCookie();
+                        {{else}}
+                        return postQuestionGood({{.Question.ID}});
+                        {{end}}
+                        ">
+                            <div>{{.QuestionGood.Count}}</div><i class="far fa-thumbs-up"></i>
+                        </button>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+        <div id="target" class="right">
+            {{ if gt .target.Question.ID 0 }}
+            <div>
+                <div class="created">投稿日：{{.target.Question.Created}}</div>
+                <div class="content q">{{.target.Question.Content}}</div>
+            </div>
+            <hr>
+            <div>
+                {{ if eq .target.Question.ID .target.Answer.QuestionID }}
+                <div class="content a">{{.target.Answer.Content}}</div>
+                <div class="created">回答日：{{.target.Answer.Created}}</div>
+                {{ else }}
+                <div class="content a">まだ回答がございません。</div>
+                {{end}}
+            </div>
+            {{end}}
+        </div>
+    </div>
+    <!-- Post question modal -->
+    <form method="POST" action="/githubio/qanda/q" onsubmit="return checkQuestion();">
+        <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">質問投稿</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>以下に質問をご記入ください。</label>
+                            <label id="msg-err" class="text-danger"></label>
+                            <textarea id="q" name="q" class="form-control" rows="10" placeholder="200文字以内"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-purple">Question</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Accept cookie modal -->
+    <div class="modal fade" id="cookieModal" tabindex="-1" role="dialog" aria-labelledby="cookieModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label>
+                        <i class="far fa-thumbs-up fa-fw" style="color: #503fa7;"></i> をするには Cookie の同意が必要です。
+                        <a href="/githubio/qanda/cookie" target="_blank" rel="noopener noreferrer">詳細はこちら</a>
+                    </label>
+                    <form method="POST" action="/githubio/qanda/cookie/accept" class="text-center">
+                        <button class="btn btn-purple" type="submit">同意する</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container-msg">
+        <div id="msg-post-err" class="text-danger"></div>
+    </div>
+    
+    {{ if eq .cookieID "" }}
+    <div id="container-cookie" class="container-cookie">
+        <button type="button" class="close text-white" onclick="closeCookieMenu();">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="content">
+            <span>
+                機能実現のために、クッキーポリシーに基づいた Cookie の取得と利用に同意をお願いいたします。
+                <a href="/githubio/qanda/cookie" target="_blank" rel="noopener noreferrer">Learn more</a>
+            </span>
+            <form method="POST" action="/githubio/qanda/cookie/accept" style="display: inline-block;">
+                <button class="btn btn-primary btn-sm" type="submit">同意する</button>
+            </form>
+        </div>
+    </div>
+    {{ end }}
+
+    <!-- footer -->
+    <footer class="container-fluid pt-3 pb-3">
+        <div class="row">
+            <div class="offset-md-1 branding h3">
+                <img src="https://konekato.github.io/assets/img/brands/logo_purple.png" alt="kONE" width="67px" height="20px">
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-1 mb-4" style="font-size: 20px;">
+                <a href="https://github.com/konekato" target="_blank" rel="noopener noreferrer" class="ml-1">
+                    <i class="fab fa-github fa-sm fa-fw"></i>
+                </a>
+                <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="ml-1">
+                    <i class="fab fa-linkedin-in fa-sm fa-fw"></i>
+                </a>
+                <a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" class="ml-1">
+                    <i class="fab fa-twitter fa-sm fa-fw"></i>
+                </a>
+                <a href="https://www.facebook.com/keiichi.kato.3154" target="_blank" rel="noopener noreferrer"
+                    class="ml-1">
+                    <i class="fab fa-facebook-f fa-sm fa-fw"></i>
+                </a>
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="ml-1">
+                    <i class="fab fa-instagram fa-sm fa-fw"></i>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-1 offset-md-1">&copy; 2020 konekato</div>
+        </div>
+    </footer>
+    <script>
+        function showPostErrorMessage() {
+            var msg = `予期せぬエラーが発生しました。<br>
+                    しばらく経ってから再度お試しください。<br>
+                    何度も発生する場合は、<a href="https://konekato.github.io/home/#contact">こちら</a>からお問い合わせ下さい。`
+            $('#msg-post-err').html(msg);
+            window.location.href = '#msg-post-err';
+        }
+        function postQuestionGood(qid) {
+            $.post('/githubio/qanda/' + qid + '/good')
+                .done(function () {
+                    location.reload();
+                })
+                .fail(function () {
+                    showPostErrorMessage();
+                });
+        }
+        function postCookieAccept() {
+            $.post('/githubio/qanda/cookie/accept')
+                .done(function () {
+                    location.reload();
+                })
+                .fail(function () {
+                    showPostErrorMessage();
+                });
+        }
+        function checkQuestion() {
+            $('#msg-err').html('');
+            var v = $.trim($('#q').val());
+            if (v == "") {
+                $('#msg-err').html('未入力の項目がございます。');
+                return false;
+            } if (v.length > 200) {
+                $('#msg-err').html('200文字以内で入力して下さい。');
+                return false;
+            }
+            return true;
+        }
+        function closeCookieMenu() {
+            $('#container-cookie').css('display', 'none');
+        }
+        function showModalAcceptCookie() {
+            $('#cookieModal').modal('show');
+            return false;
+        }
+        $(document).ready(function () {
+            $("[rel=tooltip-t]").tooltip({ placement: 'top'});
+            $("[rel=tooltip-l]").tooltip({ placement: 'left'});
+
+            if ({{.isNg}}) {
+                var msg = `投稿された質問に不正な言葉が含まれていた可能性がございます。<br>
+                管理者が確認致しますので反映までもうしばらくお待ち下さい。<br>
+                しばらく経っても反映されない場合は、<a href="https://konekato.github.io/home/#contact">こちら</a>からお問い合わせ下さい。`
+                $('#msg-post-err').html(msg);
+            }
+
+            $('#order').on('change', function(event){
+                window.location.href = '/githubio/qanda?page=1&order_by=' + event.target.value + '&sort_by={{.sortBy}}&only_answered={{.onlyAnswered}}'
+            })
+        });
+    </script>
+
+</body>
+
+</html>
+{{end}}
